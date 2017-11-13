@@ -18,3 +18,11 @@ WHERE a.id = d2.author AND d2.type = 'докторская'
 GROUP BY a.name, d1.name
 
 SELECT * FROM docs
+
+-- 3. Представление "Диссертации, с момента защиты которых прошло больше месяца, но диссертация ещё не утверждена".
+CREATE VIEW not_app_diss
+AS SELECT id, name, pres_date, app_date FROM dissertations
+WHERE TO_DAYS(now()) - TO_DAYS(pres_date) > 30 AND app_date IS NULL
+ORDER BY name;
+
+SELECT * FROM `not_app_diss
